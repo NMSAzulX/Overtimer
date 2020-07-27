@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Overtimer", "Overtimer\Overtimer.csproj", "{BBEC2FED-30A4-47D5-8ADF-67F31C0A02C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Overtimer", "Overtimer\Overtimer.csproj", "{BBEC2FED-30A4-47D5-8ADF-67F31C0A02C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeviewer", "Timeviewer\Timeviewer.csproj", "{35C9BB65-BE90-4A69-817F-7A35DDA0AAAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeviewer", "Timeviewer\Timeviewer.csproj", "{35C9BB65-BE90-4A69-817F-7A35DDA0AAAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamviewerNET45", "TeamviewerNET45\TeamviewerNET45.csproj", "{68D9B1B1-2F86-4721-8F83-C896C9BFA7B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{35C9BB65-BE90-4A69-817F-7A35DDA0AAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35C9BB65-BE90-4A69-817F-7A35DDA0AAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35C9BB65-BE90-4A69-817F-7A35DDA0AAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D9B1B1-2F86-4721-8F83-C896C9BFA7B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D9B1B1-2F86-4721-8F83-C896C9BFA7B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D9B1B1-2F86-4721-8F83-C896C9BFA7B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D9B1B1-2F86-4721-8F83-C896C9BFA7B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
