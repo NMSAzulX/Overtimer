@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Timeviewer
 {
-    public class RemoveController
+    public class TeamviewOperator
     {
         private static Regex userReg;
 
-        static RemoveController()
+        static TeamviewOperator()
         {
             userReg = new Regex(@"\d+ \d+ \d+", RegexOptions.Singleline | RegexOptions.Compiled);
         }
-        public RemoveController()
+        public TeamviewOperator()
         {
             Username = string.Empty;
             Password = string.Empty;
@@ -23,9 +25,9 @@ namespace Timeviewer
         public string Password;
         public string Holder;
 
-        public static RemoveController GetUser()
+        public static TeamviewOperator GetUser()
         {
-            RemoveController user = new RemoveController();
+            TeamviewOperator user = new TeamviewOperator();
             IntPtr tvHwnd = WindowsApi.FindWindow(null, "TeamViewer");
             if (tvHwnd != IntPtr.Zero)
             {
@@ -76,6 +78,69 @@ namespace Timeviewer
                 }
             }
             return user;
+        }
+
+
+        public static Dictionary<string, string> GetInfos(params string[] keys)
+        {
+            IntPtr tvHwnd = WindowsApi.FindWindow(null, "TeamViewer");
+            return CheckPtrInfo(tvHwnd, ImmutableHashSet.CreateRange(keys));
+        }
+
+        public static Dictionary<string,string> CheckPtrInfo(IntPtr tvHwnd, ImmutableHashSet<string> keys)
+        {
+            Dictionary<string, string> result = default;
+            if (tvHwnd != IntPtr.Zero)
+            {
+
+                tvHwnd = WindowsApi.GetWindow(tvHwnd, GetWindowCmd.GW_CHILD);
+                
+                if (tvHwnd != IntPtr.Zero)
+                {
+
+                    var message = GetMessage(tvHwnd);
+                    if (keys.Contains(message))
+                    {
+                        tvHwnd = WindowsApi.GetWindow(tvHwnd, GetWindowCmd.GW_HWNDNEXT);
+                        var text = GetMessage(tvHwnd);
+                        if (result == default)
+                        {
+                            result = new Dictionary<string, string>();
+                        }
+                        result[message] = text;
+                    }
+
+                    while (tvHwnd != IntPtr.Zero)
+                    {
+                        var tempReuslt = CheckPtrInfo(tvHwnd, keys);
+                        if (tempReuslt != default)
+                        {
+                            if (result == default)
+                            {
+                                result = tempReuslt;
+                            }
+                            else
+                            {
+                                foreach (var item in tempReuslt)
+                                {
+                                    result[item.Key] = item.Value;
+                                }
+                            }
+                        }
+                        tvHwnd = WindowsApi.GetWindow(tvHwnd, GetWindowCmd.GW_HWNDNEXT);
+                    }
+
+                }            
+            }
+               
+            return result;
+        }
+
+        public static string GetMessage(IntPtr tvHwnd)
+        {
+            StringBuilder winMessage = new StringBuilder(512);
+            WindowsApi.SendMessage(tvHwnd, 0xD, (IntPtr)winMessage.Capacity, winMessage);
+            return winMessage.ToString();
         }
     }
 
